@@ -1,6 +1,6 @@
 <?php 
 include_once('../config/config.php');
-include_once('../helper/response.php');
+include_once('../config/response.php');
 
 function registerCheckUserExist($email, $username, $phone) {
     try {

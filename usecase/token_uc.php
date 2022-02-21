@@ -1,10 +1,10 @@
 <?php 
 include_once('../config/config.php');
 include_once('../config/date_time.php');
-include_once('../helper/response.php');
+include_once('../config/response.php');
 
 function generateToken() {
-    return bin2hex(openssl_random_pseudo_bytes(32));
+    return bin2hex(openssl_random_pseudo_bytes(16));
 }
 
 function createToken($userid) {
@@ -34,7 +34,57 @@ function createToken($userid) {
         response(200, "register successfully", $data);
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "exception -> $error");
+        response(500, "createToken exception -> $error");
+    }
+}
+
+function getTokenById($userId) {
+    try {
+        $conn = callDb();
+        $sqlToken = "SELECT * FROM token WHERE user_id=$userId";
+        $result = $conn->query($sqlToken);
+        $data = new stdClass();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $data->userId = $row["user_id"];
+                $data->accessToken = $row["access_token"];
+                $data->createdAt = $row['created_at'];
+                $data->expiredAt = $row["expired_at"];
+                return $data;
+            }
+        } else {
+            response(400);
+            return null;
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, "validateSession exc : $error");
+        return null;
+    }
+}
+
+function validateToken($accessToken) {
+    try {
+        $conn = callDb();
+        $sqlToken = "SELECT * FROM token WHERE access_token='$accessToken'";
+        $result = $conn->query($sqlToken);
+        $data = new stdClass();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $data->userId = (int)$row["user_id"];
+                $data->accessToken = $row["access_token"];
+                $data->createdAt = $row['created_at'];
+                $data->expiredAt = $row["expired_at"];
+                return $data;
+            }
+        } else {
+            response(401);
+            return null;
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, "validateSession exc : $error");
+        return null;
     }
 }
 ?>

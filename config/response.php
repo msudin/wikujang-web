@@ -19,6 +19,11 @@ function response($code = 500, $msg = "", $data = null) {
         if ($msg == "") {
             $msg = "internal server error";
         }
+    } else if ($code == 404) {
+        if ($msg == "") {
+            $msg = "record not found";
+        }
+        $data = null;
     }
 
     // show [echo] json api
