@@ -1,17 +1,17 @@
 <?php
 
 function callDb() {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $db_name = "wikujang_db";
+
     try {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $db_name = "wikujang_db";
-        $conn = new PDO("mysql:host=$servername;dbname=$db_name", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $conn = new mysqli($servername,$username,$password,$db_name);
         return $conn;
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         throw $e;
     }
 }
-
 ?>

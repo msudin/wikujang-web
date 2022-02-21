@@ -1,14 +1,19 @@
 <?php
-include '../config/config.php';
+include_once('../config/config.php');
+include_once('../config/date_time.php');
+
 
 function postRegister($bodyRequest) {
     try {
         $conn = callDb();
-        $sql = "INSERT INTO user (fullname, username) VALUES ('$bodyRequest->fullName', '$bodyRequest->userName')";
-        $conn->exec($sql);
-        response(200);
-    } catch (PDOException $e) {
-        response(500, $e->getMessage());
+        $currentDate = currentTime();
+        $sql = "INSERT INTO user (`fullname`, `username`, `password`, `phone`, `created_at`, `updated_at`) VALUES ('$bodyRequest->fullName','$bodyRequest->userName', '$bodyRequest->password', '$bodyRequest->phone', '$currentDate', '$currentDate')";
+        $conn->query($sql);
+        return true;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, "postRegister exception -> $error");
+        return false;
     }
 }
 ?>

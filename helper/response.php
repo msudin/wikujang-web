@@ -5,17 +5,19 @@ function response($code = 500, $msg = "", $data = null) {
     // mapping message
     if ($code == 200) {
         if ($msg == "") {
-            $msg = "Record Found";
+            $msg = "record found";
         }
     } else if ($code == 401) {
-        $msg = "Unauthorized";
+        $msg = "unauthorized";
         $data = null;
     } else if ($code == 400) {
-        $msg = "Record Not Found";
+        if ($msg == "") {
+            $msg = "record not found";
+        }
         $data = null;
     } else if ($code == 500) {
         if ($msg == "") {
-            $msg = "Internal Server Error";
+            $msg = "internal server error";
         }
     }
 
