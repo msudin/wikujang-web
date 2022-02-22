@@ -15,7 +15,7 @@ try {
             }
         }
     } else {
-        response(500);
+        response(400, "body request empty");
     }
 } catch (Exception $e) {
     response(500, $e-getMessage());

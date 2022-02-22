@@ -17,6 +17,8 @@ try {
                 response(200, "", $dLogin);
             }
         }
+    } else {
+        response(400, "body request empty");
     }
 } catch (Exception $e) {
     $error = $e->getMessage();

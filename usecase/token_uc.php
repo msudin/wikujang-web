@@ -73,7 +73,7 @@ function validateToken($accessToken) {
             while($row = $result->fetch_assoc()) {
                 $data->userId = (int)$row["user_id"];
                 $data->accessToken = $row["access_token"];
-                $data->createdAt = $row['created_at'];
+                $data->createdAt = $row["created_at"];
                 $data->expiredAt = $row["expired_at"];
                 return $data;
             }
@@ -83,7 +83,7 @@ function validateToken($accessToken) {
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "validateSession exc : $error");
+        response(500, "validate token exc : $error");
         return NULL;
     }
 }
