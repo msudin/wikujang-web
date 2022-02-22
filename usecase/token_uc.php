@@ -54,12 +54,12 @@ function getTokenById($userId) {
             }
         } else {
             response(400);
-            return null;
+            return NULL;
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "validateSession exc : $error");
-        return null;
+        return NULL;
     }
 }
 
@@ -79,12 +79,12 @@ function validateToken($accessToken) {
             }
         } else {
             response(401);
-            return null;
+            return NULL;
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "validateSession exc : $error");
-        return null;
+        return NULL;
     }
 }
 ?>

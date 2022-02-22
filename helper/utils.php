@@ -1,7 +1,7 @@
 <?php 
 
 function isNullOrEmptyString($str){
-    return ($str === null || trim($str) === '');
+    return ($str === NULL || trim($str) === '');
 }
 
 ?>

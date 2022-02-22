@@ -10,14 +10,17 @@ try {
         if ($dUser != null) {
             $dToken = getTokenById($dUser->id);
             if ($dToken != null) {
-                $result = new stdClass();
-                $result->accessToken = $dToken->accessToken;
-                response(200, "", $dToken);
+                $dLogin = new stdClass();
+                $dLogin->userId = $dToken->userId;
+                $dLogin->accessToken = $dToken->accessToken;
+                $dLogin->expiredAt = $dToken->expiredAt;
+                response(200, "", $dLogin);
             }
         }
     }
 } catch (Exception $e) {
-
+    $error = $e->getMessage();
+    response(500, "login exception : $error");
 }
 
 ?>

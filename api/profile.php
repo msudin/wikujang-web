@@ -6,11 +6,11 @@ include_once('../config/config.php');
 try {
     $entityBody = file_get_contents('php://input');
     $entityData = json_decode($entityBody, true);    
-    if ($entityBody != '' && ($entityData["token"] ?? null) != null) {
+    if ($entityBody != '' && ($entityData["token"] ?? NULL) != NULL) {
         $dToken = validateToken($entityData["token"]);
-        if ($dToken != null) {
+        if ($dToken != NULL) {
             $dUser = getUserById($dToken->userId);
-            if($dUser != null) {
+            if($dUser != NULL) {
                 response(200, "", $dUser);
             }
         }
