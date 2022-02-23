@@ -1,21 +1,22 @@
 <?php 
-include_once('../usecase/token_uc.php');
-include_once('../usecase/user_uc.php');
-include_once('../config/config.php');
+include_once('../config/import.php');
 
 try {
-    $entityBody = file_get_contents('php://input');
-    $entityData = json_decode($entityBody, true);    
-    if ($entityBody != '' && ($entityData["token"] ?? NULL) != NULL) {
-        $dToken = validateToken($entityData["token"]);
-        if ($dToken != NULL) {
-            $dUser = getUserById($dToken->userId);
-            if($dUser != NULL) {
-                response(200, "", $dUser);
+    if (requestMethod() == "GET") {
+        $headerToken = headerToken();
+        if (!isNullOrEmptyString($headerToken)) {
+            $dToken = validateToken($headerToken);
+            if ($dToken != NULL) {
+                $dUser = getUserById($dToken->userId);
+                if($dUser != NULL) {
+                    response(200, "", $dUser);
+                }
             }
+        } else {
+            response(401);
         }
     } else {
-        response(400, "body request empty");
+        response(500);
     }
 } catch (Exception $e) {
     response(500, $e-getMessage());

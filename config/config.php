@@ -1,11 +1,12 @@
 <?php
+include_once('http.php');
 
 function callDb() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $db_name = "wikujang_db";
-
+    $servername = serverName();
+    $username = serverUserName();
+    $password = serverDbPassword();
+    $db_name = serverDbName();
+    
     try {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $conn = new mysqli($servername,$username,$password,$db_name);

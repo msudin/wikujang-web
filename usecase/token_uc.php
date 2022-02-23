@@ -1,7 +1,5 @@
 <?php 
-include_once('../config/config.php');
-include_once('../config/date_time.php');
-include_once('../config/response.php');
+include_once('../config/import.php');
 
 function generateToken() {
     return bin2hex(openssl_random_pseudo_bytes(16));
@@ -13,7 +11,16 @@ function createToken($userid) {
         $token = generateToken();
         $currentDate = currentTime();
         $expiredDate = customTimeAdd($currentDate, 5);
-        $sql = "INSERT INTO token (user_id, access_token, created_at, expired_at) VALUES ($userid, '$token', '$currentDate', '$expiredDate')";
+        $sql = "INSERT INTO token (
+            `user_id`,
+            `access_token`, `created_at`, 
+            `expired_at`
+            ) VALUES (
+                $userid,
+                '$token',
+                '$currentDate',
+                '$expiredDate'
+            )";
         $resultToken = $conn->query($sql);
 
         $data = new stdClass();
@@ -21,16 +28,12 @@ function createToken($userid) {
         $data->createdAt = $currentDate;
         $data->expiredAt = $expiredDate;
         $data->userId = $userid;
-        if($resultToken === TRUE) {
-            $sqlUser = "SELECT fullname, username FROM user WHERE id=$userid";
-            $result = $conn->query($sqlUser);
-            if ($result->num_rows == 1) {
-                while($row = $result->fetch_assoc()) {
-                    $data->fullName = $row["fullname"];
-                    $data->userName = $row["username"];
-                }
-            }
-        } 
+
+        $dUser = getUserById($userid);
+        if ($dUser != null) {
+            $data->fullName = $dUser->fullName;
+            $data->userName = $dUser->userName;
+        }
         response(200, "register successfully", $data);
     } catch (Exception $e) {
         $error = $e->getMessage();
@@ -65,21 +68,26 @@ function getTokenById($userId) {
 
 function validateToken($accessToken) {
     try {
-        $conn = callDb();
-        $sqlToken = "SELECT * FROM token WHERE access_token='$accessToken'";
-        $result = $conn->query($sqlToken);
-        $data = new stdClass();
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $data->userId = (int)$row["user_id"];
-                $data->accessToken = $row["access_token"];
-                $data->createdAt = $row["created_at"];
-                $data->expiredAt = $row["expired_at"];
-                return $data;
+        if (!isNullOrEmptyString($accessToken)) {
+            $conn = callDb();
+            $sqlToken = "SELECT * FROM token WHERE access_token='$accessToken'";
+            $result = $conn->query($sqlToken);
+            $data = new stdClass();
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $data->userId = (int)$row["user_id"];
+                    $data->accessToken = $row["access_token"];
+                    $data->createdAt = $row["created_at"];
+                    $data->expiredAt = $row["expired_at"];
+                    return $data;
+                }
+            } else {
+                response(401);
+                return NULL;
             }
         } else {
             response(401);
-            return NULL;
+            return null;
         }
     } catch (Exception $e) {
         $error = $e->getMessage();

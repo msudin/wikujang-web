@@ -14,7 +14,6 @@ function response($code = 500, $msg = "", $data = null) {
         if ($msg == "") {
             $msg = "record not found";
         }
-        $data = null;
     } else if ($code == 500) {
         if ($msg == "") {
             $msg = "internal server error";
@@ -23,7 +22,6 @@ function response($code = 500, $msg = "", $data = null) {
         if ($msg == "") {
             $msg = "record not found";
         }
-        $data = null;
     }
 
     // show [echo] json api

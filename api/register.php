@@ -24,7 +24,7 @@ try {
            }
         }
     } else {
-        response(400, "body request empty");
+        response(400);
     }
 } catch (Exception $e) {
     response(500, $e->getMessage());
