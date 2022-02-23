@@ -66,9 +66,7 @@ function getUserByPhone($phone) {
 function getUserById($userId) {
     try {
         $connn = callDb();
-        $local_image_url = urlImageLocal();
-        $dev_image_url = urlImageDev();
-        $server_url = $local_image_url; 
+        $server_url = urlPathImage(); 
 
         $sql = "SELECT f.file_id, f.file_name, u.*
         FROM `file` f 
