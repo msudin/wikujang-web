@@ -25,10 +25,7 @@ try {
                     return;
                 } else if ($_POST["type"] == "profile") {
                     // image env
-                    $local_image_url = urlImageLocal();
-                    $dev_image_url = urlImageDev();
-                    $server_url = $local_image_url; 
-            
+                    $server_url = urlPathImage(); 
                     $target_dir = "../uploads/";
                     $target_file = $target_dir . basename($filename);
             
