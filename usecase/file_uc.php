@@ -8,13 +8,11 @@ function createFile($userId, $type, $fileName) {
         $idFile = uniqid();
         $sql = "INSERT INTO `file` (
             `file_id`,
-            `user_id`,
             `type`,
             `file_name`,
             `created_at`
             ) VALUES (
                 '$idFile',
-                $userId, 
                 '$type', 
                 '$fileName', 
                 '$currentDate'

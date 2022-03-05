@@ -14,6 +14,8 @@ try {
         $bodyRequest->phone = $data['phone'] ?? NULL;
         $bodyRequest->password = $data['password'] ?? NULL;
         $bodyRequest->email = $data['email'] ?? NULL;
+        $bodyRequest->birthdate = $data['birthdate'] ?? "2022-02-27";
+        $bodyRequest->gender = $data["gender"] ?? "L";
         if (!(registerCheckUserExist($bodyRequest->phone, $bodyRequest->password))) {
            $isSuccessCreateUser = createUser($bodyRequest);
            if($isSuccessCreateUser) {

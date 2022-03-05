@@ -87,7 +87,7 @@ function validateToken($accessToken) {
             }
         } else {
             response(401);
-            return null;
+            return NULL;
         }
     } catch (Exception $e) {
         $error = $e->getMessage();

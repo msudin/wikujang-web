@@ -12,6 +12,8 @@ function createUser($bodyRequest) {
             `email`, 
             `password`,
             `phone`, 
+            `birthdate`,
+            `gender`,
             `created_at`,
             `updated_at`
             ) VALUES (
@@ -20,6 +22,8 @@ function createUser($bodyRequest) {
                  '$bodyRequest->email', 
                  '$bodyRequest->password',
                  '$bodyRequest->phone',
+                 '$bodyRequest->birthdate',
+                 '$bodyRequest->gender',
                  '$currentDate', 
                  '$currentDate'
             )";
@@ -50,6 +54,7 @@ function getUserByPhone($phone) {
                 // $data->createdAt = $row["created_at"];
                 // $data->updatedAt = $row["updated_at"];
                 // $data->deletedAt = $row["deleted_at"];
+
                 return $data;
             }
         } else {
@@ -77,20 +82,31 @@ function getUserById($userId) {
         $result = $connn->query($sql);
         if ($result->num_rows == 1) {
             while($row = $result->fetch_assoc()) {
-                $data = new \stdClass();
+                $data = new stdClass();
                 $data->id = (int)$row["user_id"];
                 $data->email = $row["email"];
                 $data->phone = $row["phone"];
                 $data->fullName = $row["fullname"];
                 $data->userName = $row["username"];
-                $data->profileImageId = $row["file_id"];
-
-                if (!isNullOrEmptyString($row['file_name'])) {
-                    $data->profileImageUrl = $server_url."".$row['file_name'];
-                } else {
-                    $data->profileImageUrl = $row['file_name'];
+                $data->birthdate = $row['birthdate'];
+                $data->gender = $row['gender'];
+                $data->profileImage = NULL;
+                if (!isNullOrEmptyString($row["file_id"])) {
+                    $photo = new stdClass();
+                    $photo->id = $row["file_id"];
+                    $photo->imageUrl = $server_url."".$row['file_name'];
+                    $data->profileImage = $photo;
                 }
-
+                $data->address = NULL;
+                if (isNullOrEmptyString($row["address_id"])) {
+                    $address = new stdClass();
+                    $address->district = NULL;
+                    $address->districtName = NULL;
+                    $address->subDistrict = NULL;
+                    $address->subDistrictName = NULL;
+                    $address->description = NULL;
+                    $data->address = $address;
+                }
                 $data->createdAt = $row["created_at"];
                 $data->updatedAt = $row["updated_at"];
                 $data->deletedAt = $row["deleted_at"];

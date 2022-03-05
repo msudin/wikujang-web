@@ -7,10 +7,10 @@ try {
         $entityData = json_decode($entityBody, true);    
         if ($entityBody != '' && ($entityData["phone"] ?? NULL) != NULL && ($entityData["password"] ?? null) != null) {
             $dUser = getUserByPhone($entityData["phone"]);
-            if ($dUser != null) {
+            if ($dUser != NULL) {
                 if ($dUser->password == $entityData["password"]) {
                     $dToken = getTokenById($dUser->id);
-                    if ($dToken != null) {
+                    if ($dToken != NULL) {
                         $dLogin = new stdClass();
                         $dLogin->userId = $dToken->userId;
                         $dLogin->accessToken = $dToken->accessToken;

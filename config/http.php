@@ -45,9 +45,8 @@ function urlPathImage() {
     if (isEnvironmentLocal()) {
         return "http://localhost:8080/wikujang/"."uploads/"; 
     } else {
-        return serverName()."uploads/";
+        return "https://wiskuljang.000webhostapp.com/uploads/";
     }
 }
-
 
 ?>

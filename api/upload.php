@@ -61,7 +61,7 @@ try {
                 response(500);
                 return;
             } 
-            response(500);
+            response(400, "", $_FILES["image"]);
             return;
         }
     } 
