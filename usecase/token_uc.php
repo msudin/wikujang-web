@@ -27,13 +27,14 @@ function createToken($userid) {
         $data->accessToken = $token;
         $data->createdAt = $currentDate;
         $data->expiredAt = $expiredDate;
-        $data->userId = $userid;
-
-        $dUser = getUserById($userid);
-        if ($dUser != null) {
-            $data->fullName = $dUser->fullName;
-            $data->userName = $dUser->userName;
-        }
+        
+        //$data->userId = $userid;
+        //$dUser = getUserById($userid);
+        //if ($dUser != null) {
+        //    $data->fullName = $dUser->fullName;
+        //    $data->userName = $dUser->userName;
+        //}
+        
         response(200, "register successfully", $data);
     } catch (Exception $e) {
         $error = $e->getMessage();
