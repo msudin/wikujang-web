@@ -2,7 +2,7 @@
 include_once('../config/import.php');
 
 try {
-   if (requestMethod() == "GET") {
+   if (requestMethod() == "POST") {
         $entityBody = file_get_contents('php://input');
         $entityData = json_decode($entityBody, true);    
         if ($entityBody != '' && ($entityData["phone"] ?? NULL) != NULL && ($entityData["password"] ?? null) != null) {
@@ -31,5 +31,4 @@ try {
     $error = $e->getMessage();
     response(500, "login : $error");
 }
-
 ?>
