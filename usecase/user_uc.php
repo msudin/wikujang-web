@@ -1,6 +1,5 @@
 <?php 
-include_once('../config/config.php');
-include_once('../config/response.php');
+include_once('../helper/import.php');
 
 function createUser($bodyRequest) {
     try {
@@ -47,14 +46,6 @@ function getUserByPhone($phone) {
                 $data->id = (int)$row["user_id"];
                 $data->phone = $row["phone"];
                 $data->password = $row["password"];
-
-                // $data->fullName = $row["fullname"];
-                // $data->username = $row["username"];
-                // $data->email = $row["email"];
-                // $data->createdAt = $row["created_at"];
-                // $data->updatedAt = $row["updated_at"];
-                // $data->deletedAt = $row["deleted_at"];
-
                 return $data;
             }
         } else {

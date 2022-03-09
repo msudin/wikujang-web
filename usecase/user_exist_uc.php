@@ -1,7 +1,5 @@
 <?php 
-include_once('../config/config.php');
-include_once('../config/response.php');
-include_once('../helper/utils.php');
+include_once('../helper/import.php');
 
 function registerCheckUserExist($phone, $password) {
     try {

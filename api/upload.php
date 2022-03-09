@@ -1,5 +1,5 @@
 <?php 
-include('../config/import.php');
+include_once('../helper/import.php');
 
 try {
     if(requestMethod() == "POST") {

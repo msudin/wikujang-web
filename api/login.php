@@ -1,5 +1,5 @@
 <?php 
-include_once('../config/import.php');
+include_once('../helper/import.php');
 
 try {
    if (requestMethod() == "POST") {
@@ -12,7 +12,7 @@ try {
                     $dToken = getTokenById($dUser->id);
                     if ($dToken != NULL) {
                         $dLogin = new stdClass();
-                        $dLogin->userId = $dToken->userId;
+                        $dLogin->userId = (int)$dToken->userId;
                         $dLogin->accessToken = $dToken->accessToken;
                         $dLogin->expiredAt = $dToken->expiredAt;
                         response(200, "", $dLogin);
