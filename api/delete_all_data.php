@@ -2,7 +2,7 @@
 include_once('../helper/import.php');
 
 try {
-    if (requestMethod() == "DELETE") { 
+    if (requestMethod() == "POST") { 
         $conn = callDb();
     
         /// DROP ALL DATA USER 
