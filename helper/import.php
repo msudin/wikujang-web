@@ -8,6 +8,7 @@ include_once('../helper/utils.php');
 
 
 include_once('../usecase/user_uc.php');
+include_once('../usecase/admin_uc.php');
 include_once('../usecase/token_uc.php');
 include_once('../usecase/file_uc.php');
 include_once('../usecase/user_exist_uc.php');
