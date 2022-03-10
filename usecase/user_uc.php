@@ -64,7 +64,7 @@ function getUserById($userId) {
         $connn = callDb();
         $server_url = urlPathImage(); 
 
-        $sql = "SELECT f.file_id, f.file_name, u.*
+        $sql = "SELECT f.*, u.*
         FROM `file` f 
         RIGHT JOIN `user` u ON f.file_id = u.profile_image_id 
         WHERE u.user_id=$userId
@@ -86,10 +86,11 @@ function getUserById($userId) {
                     $photo = new stdClass();
                     $photo->id = $row["file_id"];
                     $photo->imageUrl = $server_url."".$row['file_name'];
+                    $photo->type = $row["type"];
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;
-                if (isNullOrEmptyString($row["address_id"])) {
+                if (!isNullOrEmptyString($row["address_id"])) {
                     $address = new stdClass();
                     $address->district = NULL;
                     $address->districtName = NULL;

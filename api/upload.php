@@ -60,8 +60,9 @@ try {
                 } 
                 response(500);
                 return;
-            } 
-            response(400, "", $_FILES["image"]);
+            } else {
+                response(400, "File Not Found");
+            }
             return;
         }
     } 

@@ -6,7 +6,13 @@ function requestMethod() {
 
 function headerToken() {
     $headers = apache_request_headers();
-    return $headers['Authorization'] ?? NULL;
+    $token = "";
+    if (!empty($headers['Authorization'])) {
+        $token = $headers['Authorization'];
+    } else if (!empty($headers['authorization'])) {
+        $token = $headers['authorization'];
+    }
+    return $token;
 }
 
 function isEnvironmentLocal() {
