@@ -12,7 +12,7 @@ if(isset($_POST['submitLogin'])) {
       $passwordDecode = base64_decode(mysqli_real_escape_string($conn, $row['password']));
       if ($password != $passwordDecode) {
         ob_start(); 
-        header('location:../index.php?message=error');
+        header('location:../../index.php?message=error');
         exit();
       } else {
         session_start();
@@ -28,12 +28,12 @@ if(isset($_POST['submitLogin'])) {
     }  
   } else {
     ob_start(); 
-    header('location:../index.php?message=usernotfound');
+    header('location:../../index.php?message=usernotfound');
     exit();
   }
 } else {
     ob_start(); 
-    header('location:../index.php?message=method');
+    header('location:../../index.php?message=method');
     exit();
 }
 ?>
