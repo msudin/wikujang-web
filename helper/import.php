@@ -14,5 +14,7 @@ include_once('../usecase/file_uc.php');
 include_once('../usecase/user_exist_uc.php');
 include_once('../usecase/subdistrict_uc.php');
 include_once('../usecase/district_uc.php');
+include_once('../usecase/warung_exist_uc.php');
+include_once('../usecase/warung_uc.php');
 
 ?>

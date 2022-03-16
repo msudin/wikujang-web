@@ -62,6 +62,14 @@ try {
                     $conn->query($sqlAdmin);
                 }
             }
+
+            // DROP ALL DATA WARUNG
+            if (!empty($data["warung"])) {
+                if ($data['warung'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `warung`";
+                    $conn->query($sqlAdmin);
+                }
+            }
         }
         response(200, "success drop data");
     } else {
