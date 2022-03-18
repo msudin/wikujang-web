@@ -1,14 +1,14 @@
 <?php
 
 function response($code = 500, $msg = "", $data = null) {
-   
+
     // mapping message
     if ($code == 200) {
         if ($msg == "") {
             $msg = "record found";
         }
     } else if ($code == 401) {
-        $msg = "unauthorized";
+        $msg = "Unauthorized";
         $data = null;
     } else if ($code == 400) {
         if ($msg == "") {

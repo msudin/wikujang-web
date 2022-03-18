@@ -1,8 +1,8 @@
-<?php 
+<?php
 include_once('../helper/import.php');
 
 function generateToken() {
-    return bin2hex(openssl_random_pseudo_bytes(16));
+    return bin2hex(openssl_random_pseudo_bytes(32));
 }
 
 function createToken($userid) {
@@ -13,7 +13,7 @@ function createToken($userid) {
         $expiredDate = customTimeAdd($currentDate, 5);
         $sql = "INSERT INTO token (
             `user_id`,
-            `access_token`, `created_at`, 
+            `access_token`, `created_at`,
             `expired_at`
             ) VALUES (
                 $userid,
@@ -27,18 +27,11 @@ function createToken($userid) {
         $data->accessToken = $token;
         $data->createdAt = $currentDate;
         $data->expiredAt = $expiredDate;
-        
-        //$data->userId = $userid;
-        //$dUser = getUserById($userid);
-        //if ($dUser != null) {
-        //    $data->fullName = $dUser->fullName;
-        //    $data->userName = $dUser->userName;
-        //}
-        
-        response(200, "register successfully", $data);
+        return $data;
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "createToken exception -> $error");
+        return NULL;
     }
 }
 
@@ -62,7 +55,7 @@ function getTokenById($userId) {
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "validateSession exc : $error");
+        response(500, "ValidateSession exc : $error");
         return NULL;
     }
 }

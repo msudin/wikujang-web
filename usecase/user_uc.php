@@ -1,29 +1,33 @@
-<?php 
+<?php
 include_once('../helper/import.php');
 
-function createUser($bodyRequest) {
+function createUserRegister($bodyRequest) {
     try {
         $conn = callDb();
         $currentDate = currentTime();
         $sql = "INSERT INTO user (
             `fullname`,
             `username`,
-            `email`, 
+            `email`,
             `password`,
-            `phone`, 
+            `phone`,
             `birthdate`,
             `gender`,
+            `active`,
+            `role`,
             `created_at`,
             `updated_at`
             ) VALUES (
                  '$bodyRequest->fullName',
-                 '$bodyRequest->userName', 
-                 '$bodyRequest->email', 
+                 '$bodyRequest->userName',
+                 '$bodyRequest->email',
                  '$bodyRequest->password',
                  '$bodyRequest->phone',
                  '$bodyRequest->birthdate',
                  '$bodyRequest->gender',
-                 '$currentDate', 
+                 'true',
+                 'user',
+                 '$currentDate',
                  '$currentDate'
             )";
         $conn->query($sql);
@@ -46,6 +50,9 @@ function getUserByPhone($phone) {
                 $data->id = (int)$row["user_id"];
                 $data->phone = $row["phone"];
                 $data->password = $row["password"];
+                $data->isActive = filter_var($row['active'], FILTER_VALIDATE_BOOLEAN);
+                $data->role = $row['role'];
+                $data->fullName = $row['fullname'];
                 return $data;
             }
         } else {
@@ -62,11 +69,11 @@ function getUserByPhone($phone) {
 function getUserById($userId) {
     try {
         $connn = callDb();
-        $server_url = urlPathImage(); 
+        $server_url = urlPathImage();
 
         $sql = "SELECT f.*, u.*
-        FROM `file` f 
-        RIGHT JOIN `user` u ON f.file_id = u.profile_image_id 
+        FROM `file` f
+        RIGHT JOIN `user` u ON f.file_id = u.profile_image_id
         WHERE u.user_id=$userId
         ";
 
@@ -99,6 +106,8 @@ function getUserById($userId) {
                     $address->description = NULL;
                     $data->address = $address;
                 }
+                $data->isActive = filter_var($row['active'], FILTER_VALIDATE_BOOLEAN);
+                $data->role = $row['role'];
                 $data->createdAt = $row["created_at"];
                 $data->updatedAt = $row["updated_at"];
                 $data->deletedAt = $row["deleted_at"];
@@ -119,7 +128,7 @@ function updateUserPhotoProfile($bodyRequest) {
     try {
         $conn = callDb();
         $updatedAt = currentTime();
-        $sql = "UPDATE user SET 
+        $sql = "UPDATE user SET
             `profile_image_id`= '$bodyRequest->fileId',
             `updated_at` = '$updatedAt'
         WHERE `user_id`= $bodyRequest->userId";
@@ -128,6 +137,23 @@ function updateUserPhotoProfile($bodyRequest) {
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "create user exception -> $error");
+        return false;
+    }
+}
+
+function updateUserRole($bodyRequest) {
+    try {
+        $conn = callDb();
+        $updatedAt = currentTime();
+        $sql = "UPDATE user SET
+            `role`= '$bodyRequest->role',
+            `updated_at` = '$updatedAt'
+        WHERE `user_id`= $bodyRequest->userId";
+        $conn->query($sql);
+        return true;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, " user exception -> $error");
         return false;
     }
 }

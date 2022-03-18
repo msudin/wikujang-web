@@ -1,10 +1,10 @@
-<?php 
+<?php
 include_once('../helper/import.php');
 
 try {
    if (requestMethod() == "POST") {
         $entityBody = file_get_contents('php://input');
-        $entityData = json_decode($entityBody, true);    
+        $entityData = json_decode($entityBody, true);
         if ($entityBody != '' && ($entityData["phone"] ?? NULL) != NULL && ($entityData["password"] ?? null) != null) {
             $dUser = getUserByPhone($entityData["phone"]);
             if ($dUser != NULL) {
@@ -12,7 +12,10 @@ try {
                     $dToken = getTokenById($dUser->id);
                     if ($dToken != NULL) {
                         $dLogin = new stdClass();
-                        $dLogin->userId = (int)$dToken->userId;
+                        $dLogin->userId = $dUser->id;
+                        $dLogin->isActive = $dUser->isActive;
+                        $dLogin->role = $dUser->role;
+                        $dLogin->fullName = $dUser->fullName;
                         $dLogin->accessToken = $dToken->accessToken;
                         $dLogin->expiredAt = $dToken->expiredAt;
                         response(200, "", $dLogin);

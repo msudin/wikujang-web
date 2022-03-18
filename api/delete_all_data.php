@@ -1,41 +1,77 @@
-<?php 
+<?php
 include_once('../helper/import.php');
 
 try {
-    if (requestMethod() == "POST") { 
+    if (requestMethod() == "POST") {
         $entityBody = file_get_contents('php://input');
-        $data = json_decode($entityBody, true);
-
-        $conn = callDb();
-    
-        /// DROP ALL DATA USER 
-        $sqlUser = "DELETE FROM `user`";
-        $conn->query($sqlUser);
-
-        /// DROP ALL TOKEN 
-        $sqlFile = "DELETE FROM `token`";
-        $conn->query($sqlFile);
-
-        /// DROP ALL DATA ADDRESS
-        $sqlAdrress = "DELETE FROM `address`";
-        $conn->query($sqlAdrress);
-
-        /// DROP ALL FILE 
-        $sqlFile = "DELETE FROM `file`";
-        $conn->query($sqlFile);
-
-        /// EXCLUDE DROP WITH CASE
         if ($entityBody != '') {
+            $conn = callDb();
+            $data = json_decode($entityBody, true);
+
+            // DROP ALL DATA USER
+            if (!empty($data["user"])) {
+                if ($data['user'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `user`";
+                    $conn->query($sqlAdmin);
+                }
+            }
+
+            // DROP ALL DATA TOKEN
+            if (!empty($data["token"])) {
+                if ($data['token'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `token`";
+                    $conn->query($sqlAdmin);
+                }
+            }
+
+            // DROP ALL DATA ADDRESS
+            if (!empty($data["address"])) {
+                if ($data['address'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `address`";
+                    $conn->query($sqlAdmin);
+                }
+            }
+            // DROP ALL DATA FILE
+            if (!empty($data["file"])) {
+                if ($data['file'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `file`";
+                    $conn->query($sqlAdmin);
+                }
+            }
 
             // DROP ALL DATA ADMIN
-            if (!empty($data["isDropAdmin"])) {
-                if ($data['isDropAdmin'] == TRUE) { 
+            if (!empty($data["admin"])) {
+                if ($data['admin'] == TRUE) {
                     $sqlAdmin = "DELETE FROM `admin`";
                     $conn->query($sqlAdmin);
                 }
             }
+
+            // DROP ALL DATA SUBDISTRICT
+            if (!empty($data["subdistrict"])) {
+                if ($data['subdistrict'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `subdistrict`";
+                    $conn->query($sqlAdmin);
+                }
+            }
+
+             // DROP ALL DATA DISTRICT
+             if (!empty($data["district"])) {
+                if ($data['district'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `district`";
+                    $conn->query($sqlAdmin);
+                }
+            }
+
+            // DROP ALL DATA WARUNG
+            if (!empty($data["warung"])) {
+                if ($data['warung'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `warung`";
+                    $conn->query($sqlAdmin);
+                }
+            }
         }
-        response(200, "Success Drop All Data");
+        response(200, "success drop data");
     } else {
         response(500, "Method not allowed");
     }
