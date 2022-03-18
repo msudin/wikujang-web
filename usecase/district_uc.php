@@ -9,12 +9,14 @@ function createDistrict($bodyRequest) {
             `subdistrict_id`,
             `name`,
             `created_at`,
-            `updated_at`
+            `updated_at`,
+            `deleted_at`
             ) VALUES (
                  $bodyRequest->subdistrictId,
                  '$bodyRequest->name',
                  '$currentDate',
-                 '$currentDate'
+                 '$currentDate',
+                 ''
             )";
         $conn->query($sql);
         return true;

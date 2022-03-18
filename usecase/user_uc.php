@@ -16,7 +16,8 @@ function createUserRegister($bodyRequest) {
             `active`,
             `role`,
             `created_at`,
-            `updated_at`
+            `updated_at`,
+            `deleted_at`
             ) VALUES (
                  '$bodyRequest->fullName',
                  '$bodyRequest->userName',
@@ -28,7 +29,8 @@ function createUserRegister($bodyRequest) {
                  'true',
                  'user',
                  '$currentDate',
-                 '$currentDate'
+                 '$currentDate',
+                 ''
             )";
         $conn->query($sql);
         return true;
@@ -73,7 +75,7 @@ function getUserById($userId) {
 
         $sql = "SELECT f.*, u.*
         FROM `file` f
-        RIGHT JOIN `user` u ON f.file_id = u.profile_image_id
+        RIGHT JOIN `user` u ON f.file_id = u.image_id
         WHERE u.user_id=$userId
         ";
 
@@ -97,11 +99,11 @@ function getUserById($userId) {
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;
-                if (!isNullOrEmptyString($row["address_id"])) {
+                if (isNullOrEmptyString($row["address_id"])) {
                     $address = new stdClass();
-                    $address->district = NULL;
+                    $address->districtId = NULL;
                     $address->districtName = NULL;
-                    $address->subDistrict = NULL;
+                    $address->subDistrictId = NULL;
                     $address->subDistrictName = NULL;
                     $address->description = NULL;
                     $data->address = $address;
@@ -129,7 +131,7 @@ function updateUserPhotoProfile($bodyRequest) {
         $conn = callDb();
         $updatedAt = currentTime();
         $sql = "UPDATE user SET
-            `profile_image_id`= '$bodyRequest->fileId',
+            `image_id`= '$bodyRequest->fileId',
             `updated_at` = '$updatedAt'
         WHERE `user_id`= $bodyRequest->userId";
         $conn->query($sql);

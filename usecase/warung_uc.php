@@ -22,7 +22,8 @@ function createWarung($body) {
             `latitude`,
             `longitude`,
             `created_at`,
-            `updated_at`
+            `updated_at`,
+            `deleted_at`
             ) VALUES (
                 '$body->id',
                 $body->userId,
@@ -40,7 +41,8 @@ function createWarung($body) {
                 '$body->latitude',
                 '$body->longitude',
                 '$currentDate',
-                '$currentDate'
+                '$currentDate',
+                ''
             )";
         $conn->query($sql);
         return true;

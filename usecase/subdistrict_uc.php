@@ -10,13 +10,15 @@ function createSubdistrict($bodyRequest) {
             `name`,
             `postal_code`,
             `created_at`,
-            `updated_at`
+            `updated_at`,
+            `deleted_at`
             ) VALUES (
                 $bodyRequest->id,
                 '$bodyRequest->name',
                 '$bodyRequest->postalCode',
                 '$currentDate',
-                '$currentDate'
+                '$currentDate',
+                ''
             )";
         $conn->query($sql);
         return true;

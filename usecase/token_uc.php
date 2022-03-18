@@ -13,13 +13,16 @@ function createToken($userid) {
         $expiredDate = customTimeAdd($currentDate, 5);
         $sql = "INSERT INTO token (
             `user_id`,
-            `access_token`, `created_at`,
-            `expired_at`
+            `access_token`,
+            `created_at`,
+            `expired_at`,
+            `deleted_at`
             ) VALUES (
                 $userid,
                 '$token',
                 '$currentDate',
-                '$expiredDate'
+                '$expiredDate',
+                ''
             )";
         $resultToken = $conn->query($sql);
 
