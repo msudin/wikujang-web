@@ -126,7 +126,7 @@
       <div class="container-fluid">
         <!-- Info boxes -->
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
               <div class="info-box-content">
@@ -140,7 +140,7 @@
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-store"></i></i></span>
               <div class="info-box-content">
@@ -154,17 +154,19 @@
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
-          <!-- <div class="col-12 col-sm-6 col-md-3"> -->
-            <!-- <div class="info-box mb-3"> -->
-              <!-- <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span> -->
-              <!-- <div class="info-box-content"> -->
-                <!-- <span class="info-box-text"></span> -->
-                <!-- <span class="info-box-number"></span> -->
-              <!-- </div> -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-poll"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Product</span>
+                <span class="info-box-number">
+                  <?php echo getTotalProduct(); ?>
+                </span>
+              </div>
               <!-- /.info-box-content -->
-            <!-- </div> -->
+            </div>
             <!-- /.info-box -->
-          <!-- </div> -->
+          </div>
           <!-- /.col -->
 
           <!-- fix for small devices only -->
