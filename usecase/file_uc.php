@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once('../helper/import.php');
 
 function createFile($userId, $type, $fileName) {
@@ -13,8 +13,8 @@ function createFile($userId, $type, $fileName) {
             `created_at`
             ) VALUES (
                 '$idFile',
-                '$type', 
-                '$fileName', 
+                '$type',
+                '$fileName',
                 '$currentDate'
             )";
         $resultToken = $conn->query($sql);
@@ -29,5 +29,23 @@ function createFile($userId, $type, $fileName) {
         $error = $e->getMessage();
         response(500, "create file : $error");
     }
+}
+
+function getAllFile() {
+    $conn = callDb();
+    $array = array();
+
+    $sql = "SELECT * FROM `file`";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $data = new stdClass();
+        $data->id = $row['file_id'];
+        $data->type = $row['type'];
+        $data->fileName = $row['file_name'];
+        $data->fileUrl = urlPathImage()."".$data->fileName;
+        $data->createdAt = $row['created_at'];
+        array_push($array, $data);
+    }
+    return $array;
 }
 ?>

@@ -94,8 +94,7 @@ function getUserById($userId) {
                 if (!isNullOrEmptyString($row["file_id"])) {
                     $photo = new stdClass();
                     $photo->id = $row["file_id"];
-                    $photo->imageUrl = $server_url."".$row['file_name'];
-                    $photo->type = $row["type"];
+                    $photo->imageUrl = urlPathImage()."".$row['file_name'];
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;

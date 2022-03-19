@@ -2,8 +2,9 @@
 include_once('../helper/import.php');
 
 try {
-    /// CREATE WARUNG
     if (requestMethod() == "POST") {
+        /// CREATE WARUNG
+
         $entityBody = file_get_contents('php://input');
         $data = json_decode($entityBody, true);
         $headerToken = headerToken();
@@ -21,7 +22,7 @@ try {
                     $bodyRequest->openTime = $data['openTime'] ?? '07.00';
                     $bodyRequest->closedTime = $data['closedTime'] ?? '22.00';
                     $bodyRequest->rating = $data['rating'] ?? 0;
-                    $bodyRequest->imageId = $data['image_id'] ?? "";
+                    $bodyRequest->imageId = $data['imageId'] ?? "";
 
                     $bodyRequest->subdistrictId = $data['subdistrictId'] ?? 0;
                     $bodyRequest->districtId = $data['districtId'] ?? 0;
@@ -45,6 +46,13 @@ try {
             }
         } else {
             response(400);
+        }
+    } else if (requestMethod() == "GET") {
+        /// GET ALL WARUNG DATA
+
+        $resultWarung = getAllWarung();
+        if ($resultWarung->success == true) {
+            response(200, "record found", $resultWarung->data);
         }
     } else {
         response(500, "Method not allowed");
