@@ -16,13 +16,14 @@ function createProduct($body) {
             `rating`,
             `discount_percentage`,
             `discount_amount`,
-            `like`,
-            `view`,
+            `likes`,
+            `views`,
             `created_at`,
-            `updated_at`
+            `updated_at`,
+            `deleted_at`
             ) VALUES (
                 '$body->id',
-                $body->warungId,
+                '$body->warungId',
                 '$body->name',
                 '$body->description',
                 '$body->category',
@@ -34,7 +35,8 @@ function createProduct($body) {
                 0,
                 0,
                 '$currentDate',
-                '$currentDate'
+                '$currentDate',
+                ''
             )";
         $conn->query($sql);
         return true;
@@ -42,6 +44,52 @@ function createProduct($body) {
         $error = $e->getMessage();
         response(500, "create product exception -> $error");
         return false;
+    }
+}
+
+function getAllProduct() {
+    try {
+        $conn = callDb();
+        $array = array();
+
+        $sql = "SELECT f.*, p.*
+        FROM `file` f
+        RIGHT JOIN `product` p ON f.file_id = p.image_id";
+        $result = $conn->query($sql);
+        while($row = $result->fetch_assoc()) {
+            $data = new stdClass();
+            $data->id = $row['product_id'];
+            $data->warungId = $row['warung_id'];
+            $data->name = $row['name'];
+            $data->description = $row['description'];
+            $data->category = $row['category'];
+            $data->price = (int) $row['price'];
+            $data->rating = $row['rating'];
+            $data->likes = (int) $row['likes'];
+            $data->views = (int) $row['rating'];
+            $data->rating = $row['rating'];
+            $data->imageId = $row['image_id'];
+            $data->imageUrl = "";
+            if (!empty($data->imageId)) {
+                $data->imageUrl = urlPathImage()."".$row["file_name"];
+            }
+            $data->createdAt = $row['created_at'];
+            $data->updatedAt = $row['updated_at'];
+            $data->deletedAt = $row['deleted_at'];
+            array_push($array, $data);
+        }
+        $resultData = new stdClass();
+        $resultData->success = true;
+        $resultData->data = $array;
+        return $resultData;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, "get all product exception -> $error");
+
+        $resultData = new stdClass();
+        $resultData->success = false;
+        $resultData->data = NULL;
+        return $resultData;
     }
 }
 ?>

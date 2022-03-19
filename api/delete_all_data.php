@@ -70,6 +70,14 @@ try {
                     $conn->query($sqlAdmin);
                 }
             }
+
+            // DROP ALL DATA PRODUCT
+            if (!empty($data["product"])) {
+                if ($data['product'] == TRUE) {
+                    $sqlAdmin = "DELETE FROM `product`";
+                    $conn->query($sqlAdmin);
+                }
+            }
         }
         response(200, "success drop data");
     } else {

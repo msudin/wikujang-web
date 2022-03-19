@@ -2,8 +2,8 @@
 include_once('../helper/import.php');
 
 try {
-    /// CREATE PRODUCT
     if (requestMethod() == "POST") {
+        /// CREATE PRODUCT
         $entityBody = file_get_contents('php://input');
         $data = json_decode($entityBody, true);
         $headerToken = headerToken();
@@ -26,12 +26,18 @@ try {
                             response(200, "success create product", $bodyRequest);
                         }
                     } else {
-                        response(400, "warungId tidak boleh kosong")
+                        response(400, "warungId tidak boleh kosong");
                     }
                 }
             }
         } else {
             response(400);
+        }
+    } else if (requestMethod() == "GET") {
+        /// GET ALL PRODUCT
+        $result = getAllProduct();
+        if ($result->success == true) {
+            response(200, "record found", $result->data);
         }
     } else {
         response(500, "Method not allowed");

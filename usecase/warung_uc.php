@@ -58,7 +58,6 @@ function getAllWarung() {
         $conn = callDb();
         $array = array();
 
-        // $sql = "SELECT * FROM warung";
         $sql = "SELECT f.*, w.*
         FROM `file` f
         RIGHT JOIN `warung` w ON f.file_id = w.image_id";
