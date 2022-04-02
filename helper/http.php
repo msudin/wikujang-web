@@ -16,7 +16,7 @@ function headerToken() {
 }
 
 function isEnvironmentLocal() {
-    return true;
+    return false;
 }
 
 function serverName() {
@@ -33,7 +33,7 @@ function serverUserName() {
 
 function serverDbPassword() {
     if (isEnvironmentLocal()) {
-        return "";
+        return "root";
     } else {
         return "Hostingerhostinger1234#";
     }
