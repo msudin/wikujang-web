@@ -18,7 +18,7 @@ try {
                     $ext = pathinfo($filename, PATHINFO_EXTENSION);
 
                     // set max size image uploaded
-                    $maxsize = 0.1 * 1024 * 1024;
+                    $maxsize = 2 * 1024 * 1024;
                     if(!array_key_exists($ext, $allowed)) {
                         response(400, "Format image not allowed");
                         return;

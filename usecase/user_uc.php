@@ -55,6 +55,7 @@ function getUserByPhone($phone) {
                 $data->isActive = filter_var($row['active'], FILTER_VALIDATE_BOOLEAN);
                 $data->role = $row['role'];
                 $data->fullName = $row['fullname'];
+                $data->userName = $row['username'];
                 return $data;
             }
         } else {

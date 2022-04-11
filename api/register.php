@@ -23,6 +23,7 @@ try {
                        if (!empty($dToken)) {
                            $dToken->userId = $userData->id;
                            $dToken->fullName = $userData->fullName;
+                           $dToken->username = $userData->userName;
                            $dToken->isActive = $userData->isActive;
                            $dToken->role = $userData->role;
                            response(200, "register successfully", $dToken);

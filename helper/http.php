@@ -16,7 +16,7 @@ function headerToken() {
 }
 
 function isEnvironmentLocal() {
-    return false;
+    return true;
 }
 
 function serverName() {
@@ -49,7 +49,7 @@ function serverDbName() {
 
 function urlPathImage() {
     if (isEnvironmentLocal()) {
-        return "http://localhost:8080/wikujang/"."uploads/"; 
+        return "http://192.168.68.104:8888/wikujang-web/"."uploads/"; 
     } else {
         return "https://wiskuljang.000webhostapp.com/uploads/";
     }
