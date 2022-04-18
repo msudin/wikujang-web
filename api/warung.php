@@ -38,7 +38,7 @@ try {
                            $body->userId = $bodyRequest->userId;
                            $isSuccessUpdateUserRole = updateUserRole($body);
                            if ($isSuccessUpdateUserRole) {
-                            response(200, "Create warung success", $bodyRequest);
+                            response(200, "Berhasil Buka Warung", $bodyRequest);
                            }
                        }
                     }

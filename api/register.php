@@ -13,7 +13,7 @@ try {
             $bodyRequest->password = $data['password'] ?? NULL;
             $bodyRequest->email = $data['email'] ?? NULL;
             $bodyRequest->birthdate = $data['birthdate'] ?? "2022-02-27";
-            $bodyRequest->gender = $data["gender"] ?? "L";
+            $bodyRequest->gender = $data["gender"] ?? "Laki-laki";
             if (!(registerCheckUserExist($bodyRequest->phone, $bodyRequest->password))) {
                $isSuccessCreateUser = createUserRegister($bodyRequest);
                if($isSuccessCreateUser) {
@@ -26,7 +26,7 @@ try {
                            $dToken->username = $userData->userName;
                            $dToken->isActive = $userData->isActive;
                            $dToken->role = $userData->role;
-                           response(200, "register successfully", $dToken);
+                           response(200, "Register berhasil", $dToken);
                        }
                    }
                }

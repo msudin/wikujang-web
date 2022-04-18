@@ -15,7 +15,7 @@ try {
                 $bodyRequest->password = base64_encode($bodyRequest->password);
                 $isSuccessCreateAdmin = createAdmin($bodyRequest);
                 if ($isSuccessCreateAdmin) {
-                    response(200, "success create admin", $bodyRequest);
+                    response(200, "Success create admin", $bodyRequest);
                 }
             }
         } else {

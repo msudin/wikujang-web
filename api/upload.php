@@ -20,10 +20,10 @@ try {
                     // set max size image uploaded
                     $maxsize = 2 * 1024 * 1024;
                     if(!array_key_exists($ext, $allowed)) {
-                        response(400, "Format image not allowed");
+                        response(400, "Format image tidak diizinkan");
                         return;
                     } else if ($filesize > $maxsize) {
-                        response(400, "Size image to large");
+                        response(400, "Size image terlalu besar");
                         return;
                     } else {
                         // image env
@@ -47,11 +47,11 @@ try {
                                     "type" => $dFile->type,
                                     "createdAt" => $dFile->createdAt
                                 );
-                                response(200, "Success upload image", $result);
+                                response(200, "Berhasil upload image", $result);
                             }
                             return;
                         }
-                        response(500, "1");
+                        response(500);
                         return;
                     }
                     return;
@@ -67,7 +67,7 @@ try {
     response(500);
 } catch (Exception $e) {
     $error = $e->getMessage();
-    response(500, "upload image : $error");
+    response(500, "Upload image : $error");
 }
 
 ?>

@@ -155,7 +155,7 @@ function updateUserRole($bodyRequest) {
         return true;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, " user exception -> $error");
+        response(500, "user exception -> $error");
         return false;
     }
 }

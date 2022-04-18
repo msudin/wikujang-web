@@ -21,17 +21,17 @@ try {
                         response(200, "", $dLogin);
                     }
                 } else {
-                    response(400, "invalid phone number or password");
+                    response(400, "Invalid Nomor Hp / Password");
                 }
             }
         } else {
-            response(400, "invalid phone number or password");
+            response(400, "Invalid Nomor Hp / Password");
         }
    } else {
        response(500);
    }
 } catch (Exception $e) {
     $error = $e->getMessage();
-    response(500, "login : $error");
+    response(500, "Login exception : $error");
 }
 ?>

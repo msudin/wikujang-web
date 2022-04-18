@@ -13,7 +13,7 @@ try {
             $data->postalCode = $entity['postalCode'];
             createSubdistrict($data);
         }
-        response("200", "success create subdistrict");
+        response("200", "Success create subdistrict");
     } else {
         response(500, "Method Not Allowed");
     }

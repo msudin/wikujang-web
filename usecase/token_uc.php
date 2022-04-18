@@ -33,7 +33,7 @@ function createToken($userid) {
         return $data;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "createToken exception -> $error");
+        response(500, "Create token exception -> $error");
         return NULL;
     }
 }
@@ -58,7 +58,7 @@ function getTokenById($userId) {
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "ValidateSession exc : $error");
+        response(500, "Validate session exception : $error");
         return NULL;
     }
 }
@@ -88,7 +88,7 @@ function validateToken($accessToken) {
         }
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "validate token exc : $error");
+        response(500, "Validate token exception : $error");
         return NULL;
     }
 }

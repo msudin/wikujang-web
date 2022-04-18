@@ -4,10 +4,10 @@ include_once('../helper/import.php');
 function registerCheckUserExist($phone, $password) {
     try {
         if (isNullOrEmptyString($phone)) {
-            response(400, "phone can't empty" );
+            response(400, "No Hp tidak boleh kosong" );
             return true; 
         } else if (isNullOrEmptyString($password)) {
-            response(400, "password can't empty" );
+            response(400, "Password tidak boleh kosong" );
             return true; 
         } else {
             $conn = callDb();
@@ -15,7 +15,7 @@ function registerCheckUserExist($phone, $password) {
             $resultPhone = $conn->query($sqlPhone);
             
             if ($resultPhone->num_rows > 0) {
-                response(400, "phone already exist" );
+                response(400, "Nomor Hp sudah terdaftar" );
                 return true;
             } else {
                 return false;
@@ -32,17 +32,17 @@ function registerCheckUserExist($phone, $password) {
 function registerCheckAdminExist($email, $username) {
     try {
         if (isNullOrEmptyString($email)) {
-            response(400, "email can't empty" );
+            response(400, "Email tidak boleh kosong" );
             return true; 
         } else if (isNullOrEmptyString($username)) {
-            response(400, "username can't empty" );
+            response(400, "Username tidak boleh kosong" );
             return true; 
         } else {
             $conn = callDb();
             $sqlAdmin = "SELECT * FROM `admin` WHERE email='$email' OR username='$username'";
             $resultAdmin = $conn->query($sqlAdmin);
             if ($resultAdmin->num_rows > 0) {
-                response(400, "email or username already exist" );
+                response(400, "Email atau Username sudah terdaftar" );
                 return true;
             } else  {
                 return false;

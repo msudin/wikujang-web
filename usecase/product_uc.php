@@ -42,7 +42,7 @@ function createProduct($body) {
         return true;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "create product exception -> $error");
+        response(500, "Create product exception -> $error");
         return false;
     }
 }
@@ -84,7 +84,7 @@ function getAllProduct() {
         return $resultData;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "get all product exception -> $error");
+        response(500, "Get all product exception -> $error");
 
         $resultData = new stdClass();
         $resultData->success = false;

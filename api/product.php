@@ -23,10 +23,10 @@ try {
                     if(!empty($bodyRequest->warungId)) {
                         $isSuccess = createProduct($bodyRequest);
                         if ($isSuccess) {
-                            response(200, "success create product", $bodyRequest);
+                            response(200, "Berhasil menambahkan produk", $bodyRequest);
                         }
                     } else {
-                        response(400, "warungId tidak boleh kosong");
+                        response(400, "Id warung tidak boleh kosong");
                     }
                 }
             }
