@@ -13,6 +13,14 @@ try {
             createDistrict($data);
         }
         response("200", "success create district");
+    } else if (requestMethod() == "GET") {
+        $resultAllDistrict = new stdClass();
+        if (isset($_GET['id'])) {
+            $resultAllDistrict = getAllDistrict($_GET['id']);
+        } else {
+            $resultAllDistrict = getAllDistrict();
+        }
+        response(200, "record found", $resultAllDistrict);
     } else if (requestMethod() == "DELETE") {
         response(200, "Delete Method");
     } else {

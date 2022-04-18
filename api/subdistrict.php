@@ -14,6 +14,9 @@ try {
             createSubdistrict($data);
         }
         response("200", "Success create subdistrict");
+    } else if (requestMethod() == "GET"){
+        $resultSubdistrict = getAllSubdistrict();
+        response(200, "record found", $resultSubdistrict);
     } else {
         response(500, "Method Not Allowed");
     }

@@ -27,4 +27,27 @@ function createDistrict($bodyRequest) {
     }
 }
 
+function getAllDistrict($id = null) {
+    $conn = callDb();
+    $array = array();
+
+    $sql = "";
+    if(isset($id)) {
+        $sql = "SELECT * FROM `district` WHERE `subdistrict_id`=$id";
+    } else {
+        $sql = "SELECT * FROM `district`";
+    }
+    
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $data = new stdClass();
+        $data->id = (Int) $row['district_id'];
+        $data->subdistrictId = (Int) $row['subdistrict_id'];
+        $data->name = $row['name'];
+        $data->createdAt = $row['created_at'];
+        array_push($array, $data);
+    }
+    return $array;   
+}
+
 ?>

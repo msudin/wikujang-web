@@ -74,9 +74,9 @@ function getUserById($userId) {
         $connn = callDb();
         $server_url = urlPathImage();
 
-        $sql = "SELECT f.*, u.*
-        FROM `file` f
-        RIGHT JOIN `user` u ON f.file_id = u.image_id
+        $sql = "SELECT * FROM `user` u 
+        LEFT JOIN `file` f ON u.image_id = f.file_id 
+        LEFT JOIN `address` ad ON u.address_id = ad.address_id 
         WHERE u.user_id=$userId
         ";
 
@@ -99,13 +99,13 @@ function getUserById($userId) {
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;
-                if (isNullOrEmptyString($row["address_id"])) {
+                if (!isNullOrEmptyString($row["address_id"])) {
                     $address = new stdClass();
-                    $address->districtId = NULL;
-                    $address->districtName = NULL;
-                    $address->subDistrictId = NULL;
-                    $address->subDistrictName = NULL;
-                    $address->description = NULL;
+                    $address->districtId = 1121;
+                    $address->districtName = "Pasuruan";
+                    $address->subDistrictId = 123123;
+                    $address->subDistrictName = "Ngabar";
+                    $address->description = "Jl Kemana Saja";
                     $data->address = $address;
                 }
                 $data->isActive = filter_var($row['active'], FILTER_VALIDATE_BOOLEAN);
