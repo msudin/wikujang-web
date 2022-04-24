@@ -2,17 +2,18 @@
 include_once('../helper/import.php');
 
 try {
+    clearstatcache();
     if(requestMethod() == "POST") {
         $dToken = validateToken(headerToken());
         if ($dToken != NULL) {
-            if(isset($_FILES["image"]) && $_FILES["image"]["error"] == 0 && isset($_POST["type"])) {
+            if(isset($_FILES["file"]) && $_FILES["file"]["error"] == 0 && isset($_POST["type"])) {
                 $typeImage = $_POST["type"];
                 if ($typeImage == "profile" || $typeImage == "product" || $typeImage == "warung") {
-                    $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
-                    $filename = $_FILES["image"]["name"];
-                    $filetype = $_FILES["image"]["type"];
-                    $filesize = $_FILES["image"]["size"];
-                    $filetemp = $_FILES["image"]["tmp_name"];
+                    $allowed = array("jpg" => "file/jpg", "jpeg" => "file/jpeg", "gif" => "file/gif", "png" => "file/png");
+                    $filename = $_FILES["file"]["name"];
+                    $filetype = $_FILES["file"]["type"];
+                    $filesize = $_FILES["file"]["size"];
+                    $filetemp = $_FILES["file"]["tmp_name"];
 
                     // verify file extension
                     $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -42,12 +43,12 @@ try {
                             if ($dFile != NULL) {
                                 $result = array(
                                     "id" => $dFile->id,
-                                    "imageUrl" => urlPathImage()."".$basename,
-                                    "imageName" => $basename,
+                                    "fileUrl" => urlPathImage()."".$basename,
+                                    "fileName" => $basename,
                                     "type" => $dFile->type,
                                     "createdAt" => $dFile->createdAt
                                 );
-                                response(200, "Berhasil upload image", $result);
+                                response(200, "Berhasil upload file", $result);
                             }
                             return;
                         }

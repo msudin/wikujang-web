@@ -35,7 +35,7 @@ function createWarung($body) {
                 '$body->closedTime',
                 $body->rating,
                 '$body->imageId',
-                $body->subdistrictId,
+                $body->subDistrictId,
                 $body->districtId,
                 '$body->address',
                 '$body->latitude',

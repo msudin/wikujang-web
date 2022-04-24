@@ -42,7 +42,7 @@ function getAllDistrict($id = null) {
     while($row = $result->fetch_assoc()) {
         $data = new stdClass();
         $data->id = (Int) $row['district_id'];
-        $data->subdistrictId = (Int) $row['subdistrict_id'];
+        $data->subddDistrictId = (Int) $row['subdistrict_id'];
         $data->name = $row['name'];
         $data->createdAt = $row['created_at'];
         array_push($array, $data);

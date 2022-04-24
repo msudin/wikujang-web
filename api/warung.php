@@ -2,9 +2,9 @@
 include_once('../helper/import.php');
 
 try {
+    clearstatcache();
     if (requestMethod() == "POST") {
         /// CREATE WARUNG
-
         $entityBody = file_get_contents('php://input');
         $data = json_decode($entityBody, true);
         $headerToken = headerToken();
@@ -24,7 +24,7 @@ try {
                     $bodyRequest->rating = $data['rating'] ?? 0;
                     $bodyRequest->imageId = $data['imageId'] ?? "";
 
-                    $bodyRequest->subdistrictId = $data['subdistrictId'] ?? 0;
+                    $bodyRequest->subDistrictId = $data['subDistrictId'] ?? 0;
                     $bodyRequest->districtId = $data['districtId'] ?? 0;
                     $bodyRequest->address = $data['address'] ?? "";
                     $bodyRequest->latitude = $data['latitude'] ?? "";
@@ -38,7 +38,7 @@ try {
                            $body->userId = $bodyRequest->userId;
                            $isSuccessUpdateUserRole = updateUserRole($body);
                            if ($isSuccessUpdateUserRole) {
-                            response(200, "Berhasil Buka Warung", $bodyRequest);
+                               response(200, "Berhasil Buka Warung", $bodyRequest);
                            }
                        }
                     }

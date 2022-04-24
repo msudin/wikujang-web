@@ -2,13 +2,14 @@
 include_once('../helper/import.php');
 
 try {
+    clearstatcache();
     if (requestMethod() == "POST") {
         $entityBody = file_get_contents('php://input');
         $entityData = json_decode($entityBody, true);
         $arrayList = array_values($entityData['district']);
         foreach($arrayList as $entity) {
             $data = new stdClass();
-            $data->subdistrictId = (int)$entity['subdistrictId'];
+            $data->subDistrictId = (int)$entity['subdistrictId'];
             $data->name = $entity['name'];
             createDistrict($data);
         }

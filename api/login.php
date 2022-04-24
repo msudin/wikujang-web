@@ -2,7 +2,8 @@
 include_once('../helper/import.php');
 
 try {
-   if (requestMethod() == "POST") {
+    clearstatcache();
+    if (requestMethod() == "POST") {
         $entityBody = file_get_contents('php://input');
         $entityData = json_decode($entityBody, true);
         if ($entityBody != '' && ($entityData["phone"] ?? NULL) != NULL && ($entityData["password"] ?? null) != null) {
@@ -27,9 +28,9 @@ try {
         } else {
             response(400, "Invalid Nomor Hp / Password");
         }
-   } else {
-       response(500);
-   }
+    } else {
+        response(500);
+    }
 } catch (Exception $e) {
     $error = $e->getMessage();
     response(500, "Login exception : $error");
