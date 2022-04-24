@@ -5,47 +5,48 @@ function createWarung($body) {
     try {
         $conn = callDb();
         $currentDate = currentTime();
-        $sql = "INSERT INTO warung (
-            `warung_id`,
-            `user_id`,
-            `name`,
-            `username`,
-            `description`,
-            `is_open`,
-            `open_time`,
-            `closed_time`,
-            `rating`,
-            `image_id`,
-            `subdistrict_id`,
-            `district_id`,
-            `address`,
-            `latitude`,
-            `longitude`,
-            `created_at`,
-            `updated_at`,
-            `deleted_at`
-            ) VALUES (
-                '$body->id',
-                $body->userId,
-                '$body->name',
-                '$body->userName',
-                '$body->description',
-                '$body->isOpen',
-                '$body->openTime',
-                '$body->closedTime',
-                $body->rating,
-                '$body->imageId',
-                $body->subDistrictId,
-                $body->districtId,
-                '$body->address',
-                '$body->latitude',
-                '$body->longitude',
-                '$currentDate',
-                '$currentDate',
-                ''
-            )";
-        $conn->query($sql);
-        return true;
+
+        $result = createAddress($body->subDistrictId, $body->districtId, $body->address);
+        if ($result->success == true) {
+            $sql = "INSERT INTO warung (
+                `warung_id`,
+                `user_id`,
+                `name`,
+                `username`,
+                `description`,
+                `is_open`,
+                `open_time`,
+                `closed_time`,
+                `rating`,
+                `image_id`,
+                `address_id`,
+                `latitude`,
+                `longitude`,
+                `created_at`,
+                `updated_at`,
+                `deleted_at`
+                ) VALUES (
+                    '$body->id',
+                    $body->userId,
+                    '$body->name',
+                    '$body->userName',
+                    '$body->description',
+                    '$body->isOpen',
+                    '$body->openTime',
+                    '$body->closedTime',
+                    $body->rating,
+                    '$body->imageId',
+                    '$result->data',
+                    '$body->latitude',
+                    '$body->longitude',
+                    '$currentDate',
+                    '$currentDate',
+                    ''
+                )";
+            $conn->query($sql);
+            return true;
+        }
+        return false;
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "create warung exception -> $error");
@@ -79,6 +80,11 @@ function getAllWarung() {
             if (!empty($data->imageId)) {
                 $data->imageUrl = urlPathImage()."".$row["file_name"];
             }
+            $data->address = null;
+            $resultAddress = getAddressDetail($row['address_id']);
+            if ($resultAddress->success = true) {
+                $data->address = $resultAddress->data;
+            }
             $data->latitude = $row['latitude'];
             $data->longitude = $row['longitude'];
             $data->createdAt = $row['created_at'];
@@ -93,6 +99,58 @@ function getAllWarung() {
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, "get all warung exception -> $error");
+
+        $resultData = new stdClass();
+        $resultData->success = false;
+        $resultData->data = NULL;
+        return $resultData;
+    }
+}
+
+function getWarungById($id = NULL) {
+    try {
+        $conn = callDb();
+        $data = new stdClass();
+        $result = new stdClass();
+        $temp = new stdClass();
+
+        $sql = "SELECT f.*, w.*
+        FROM `file` f
+        RIGHT JOIN `warung` w ON f.file_id = w.image_id WHERE w.user_id=$id";
+        $result = $conn->query($sql);
+        while($row = $result->fetch_assoc()) {
+            $data->id = $row['warung_id'];
+            $data->userId = (int)$row['user_id'];
+            $data->name = $row['name'];
+            $data->username = $row['username'];
+            $data->description = $row['description'];
+            $data->isOpen = filter_var($row['is_open'], FILTER_VALIDATE_BOOLEAN);
+            $data->openTime = $row['open_time'];
+            $data->closedTime = $row['closed_time'];
+            $data->rating = $row['rating'];
+            $data->imageId = $row['image_id'];
+            $data->imageUrl = "";
+            if (!empty($data->imageId)) {
+                $data->imageUrl = urlPathImage()."".$row["file_name"];
+            }
+            $data->address = null;
+            $temp->addressId = $row['address_id'];
+            $data->latitude = $row['latitude'];
+            $data->longitude = $row['longitude'];
+            $data->createdAt = $row['created_at'];
+            $data->updatedAt = $row['updated_at'];
+            $data->deletedAt = $row['deleted_at'];
+        }
+
+        // query get detail Address;
+        $resultAddress = getAddressDetail($temp->addressId);
+        if ($resultAddress->success = true) {
+            $data->address = $resultAddress->data;
+        }
+        return resultBody(true, $data);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, $error);
 
         $resultData = new stdClass();
         $resultData->success = false;

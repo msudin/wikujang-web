@@ -7,7 +7,7 @@ function createDistrict($bodyRequest) {
         $currentDate = currentTime();
         $sql = "INSERT INTO district (
             `subdistrict_id`,
-            `name`,
+            `district_name`,
             `created_at`,
             `updated_at`,
             `deleted_at`

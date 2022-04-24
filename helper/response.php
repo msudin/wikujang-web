@@ -36,4 +36,11 @@ function response($code = 500, $msg = "", $data = null) {
     echo $myJSON;
 }
 
+function resultBody($isSuccess = false, $data = null) {
+    $result = new stdClass();
+    $result->success = $isSuccess;
+    $result->data = $data;
+    return $result;
+}
+
 ?>

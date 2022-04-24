@@ -33,7 +33,7 @@ try {
                         $target_file = $target_dir . basename($filename);
 
                         /* create new name file */
-                        $newfilename   = uniqid() . "-" . time();
+                        $newfilename   = uniqid() ."". time();
                         $extension  = pathinfo($filename, PATHINFO_EXTENSION );
                         $basename   = $newfilename . "." . $extension;
                         $new_target_file = $target_dir . basename($basename);
