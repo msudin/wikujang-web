@@ -38,7 +38,7 @@ function getAllSubdistrict() {
     while($row = $result->fetch_assoc()) {
         $data = new stdClass();
         $data->id = (Int) $row['subdistrict_id'];
-        $data->name = $row['name'];
+        $data->name = $row['subdistrict_name'];
         $data->postalCode = (Int) $row['postal_code'];
         $data->createdAt = $row['created_at'];
         array_push($array, $data);
