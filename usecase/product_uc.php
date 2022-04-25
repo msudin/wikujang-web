@@ -71,7 +71,9 @@ function getAllProduct() {
             $data->imageId = $row['image_id'];
             $data->imageUrl = "";
             if (!empty($data->imageId)) {
-                $data->imageUrl = urlPathImage()."".$row["file_name"];
+                if (isset($row["file_name"])) {
+                    $data->imageUrl = urlPathImage()."".$row["file_name"];
+                }
             }
             $data->createdAt = $row['created_at'];
             $data->updatedAt = $row['updated_at'];

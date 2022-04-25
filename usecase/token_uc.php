@@ -67,12 +67,17 @@ function validateToken($accessToken) {
     try {
         if (!isNullOrEmptyString($accessToken)) {
             $conn = callDb();
-            $sqlToken = "SELECT * FROM token WHERE access_token='$accessToken'";
+            
+            $sqlToken = "SELECT * FROM `token` t 
+            LEFT JOIN `warung` w ON w.user_id = t.user_id
+            WHERE access_token='$accessToken'";
+
             $result = $conn->query($sqlToken);
             $data = new stdClass();
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     $data->userId = (int)$row["user_id"];
+                    $data->warungId = $row["warung_id"];
                     $data->accessToken = $row["access_token"];
                     $data->createdAt = $row["created_at"];
                     $data->expiredAt = $row["expired_at"];

@@ -13,11 +13,11 @@ try {
                 if ($dToken != NULL) {
                     $bodyRequest = new stdClass();
                     $bodyRequest->id = uniqid();
-                    $bodyRequest->warungId = $data['warungId'] ?? "";
+                    $bodyRequest->warungId = $dToken->warungId ?? "";
                     $bodyRequest->name = $data['name'] ?? "";
                     $bodyRequest->description = $data['description'] ?? "";
                     $bodyRequest->category = $data['category'] ?? "";
-                    $bodyRequest->price = $data['price'] ?? 0;
+                    $bodyRequest->price = (Int) $data['price'] ?? 0;
                     $bodyRequest->imageId = $data['imageId'] ?? "";
 
                     if(!empty($bodyRequest->warungId)) {

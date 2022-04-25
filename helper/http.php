@@ -49,7 +49,7 @@ function serverDbName() {
 
 function urlPathImage() {
     if (isEnvironmentLocal()) {
-        return "http://192.168.16.30:8888/wikujang-web/"."uploads/"; 
+        return "http://192.168.68.100:8888/wikujang-web/"."uploads/"; 
     } else {
         return "https://wiskuljang.000webhostapp.com/uploads/";
     }
