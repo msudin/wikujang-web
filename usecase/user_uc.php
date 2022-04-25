@@ -74,11 +74,10 @@ function getUserById($userId) {
         $connn = callDb();
         $server_url = urlPathImage();
 
-        $sql = "SELECT * FROM `user` u 
+        $sql = "SELECT f.file_id, f.type, f.file_name, ad.address_id, ad.subdistrict_id, ad.district_id, ad.address_detail, u.* FROM `user` u 
         LEFT JOIN `file` f ON u.image_id = f.file_id 
         LEFT JOIN `address` ad ON u.address_id = ad.address_id 
-        WHERE u.user_id=$userId
-        ";
+        WHERE u.user_id=$userId";
 
         $result = $connn->query($sql);
         if ($result->num_rows == 1) {
