@@ -68,7 +68,7 @@ function validateToken($accessToken) {
         if (!isNullOrEmptyString($accessToken)) {
             $conn = callDb();
             
-            $sqlToken = "SELECT * FROM `token` t 
+            $sqlToken = "SELECT t.*, w.warung_id FROM `token` t 
             LEFT JOIN `warung` w ON w.user_id = t.user_id
             WHERE access_token='$accessToken'";
 
@@ -81,8 +81,9 @@ function validateToken($accessToken) {
                     $data->accessToken = $row["access_token"];
                     $data->createdAt = $row["created_at"];
                     $data->expiredAt = $row["expired_at"];
-                    return $data;
+                    
                 }
+                return $data;
             } else {
                 response(401);
                 return NULL;

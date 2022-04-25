@@ -2,6 +2,7 @@
 include_once('../helper/import.php');
 
 try {
+    clearstatcache();
     if (requestMethod() == "GET") {
         $headerToken = headerToken();
         if (!isNullOrEmptyString($headerToken)) {
