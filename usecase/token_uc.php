@@ -76,12 +76,11 @@ function validateToken($accessToken) {
             $data = new stdClass();
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
-                    $data->userId = (int)$row["user_id"];
+                    $data->userId = (int) $row["user_id"];
                     $data->warungId = $row["warung_id"];
                     $data->accessToken = $row["access_token"];
                     $data->createdAt = $row["created_at"];
                     $data->expiredAt = $row["expired_at"];
-                    
                 }
                 return $data;
             } else {

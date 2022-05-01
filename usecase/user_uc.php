@@ -159,4 +159,21 @@ function updateUserRole($bodyRequest) {
     }
 }
 
+function updatePassword($userId, $password) {
+    try {
+        $conn = callDb();
+        $updatedAt = currentTime();
+        $sql = "UPDATE user SET
+            `password`= '$password',
+            `updated_at` = '$updatedAt'
+        WHERE `user_id`= $userId";
+        $conn->query($sql);
+        return true;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, $error);
+        return false;
+    }
+}
+
 ?>

@@ -135,18 +135,20 @@ function getWarungById($id = NULL) {
             }
             $data->address = null;
             $temp->addressId = $row['address_id'];
+            if (!empty($temp->addressId)) {
+
+                // query get detail Address;
+                $resultAddress = getAddressDetail($temp->addressId);
+                if ($resultAddress->success = true) {
+                    $data->address = $resultAddress->data;
+                }   
+            } 
             $data->latitude = $row['latitude'];
             $data->longitude = $row['longitude'];
             $data->createdAt = $row['created_at'];
             $data->updatedAt = $row['updated_at'];
             $data->deletedAt = $row['deleted_at'];
-        }
-
-        // query get detail Address;
-        $resultAddress = getAddressDetail($temp->addressId);
-        if ($resultAddress->success = true) {
-            $data->address = $resultAddress->data;
-        }
+        } 
         return resultBody(true, $data);
     } catch (Exception $e) {
         $error = $e->getMessage();
