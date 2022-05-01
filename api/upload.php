@@ -22,10 +22,8 @@ try {
                     $maxsize = 2 * 1024 * 1024;
                     if(!array_key_exists($ext, $allowed)) {
                         response(400, "Format image tidak diizinkan");
-                        return;
                     } else if ($filesize > $maxsize) {
                         response(400, "Size image terlalu besar");
-                        return;
                     } else {
                         // image env
                         $server_url = urlPathImage();
@@ -50,22 +48,20 @@ try {
                                 );
                                 response(200, "Berhasil upload file", $result);
                             }
-                            return;
+                        } else {
+                            response(500, "Failed moved file");        
                         }
-                        response(500);
-                        return;
                     }
-                    return;
                 } else {
-                    response(500, "Type image not allowed");
+                    response(500, "Type file not allowed");
                 }
             } else {
                 response(400, "File Not Found");
             }
-            return;
         }
+    } else {
+        response(500);
     }
-    response(500);
 } catch (Exception $e) {
     $error = $e->getMessage();
     response(500, "Upload image : $error");

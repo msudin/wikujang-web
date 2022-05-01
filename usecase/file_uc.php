@@ -27,7 +27,8 @@ function createFile($userId, $type, $fileName) {
         return $data;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "create file : $error");
+        response(500, $error);
+        return NULL;
     }
 }
 
