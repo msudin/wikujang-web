@@ -90,11 +90,14 @@ function getUserById($userId) {
                 $data->userName = $row["username"];
                 $data->birthdate = $row['birthdate'];
                 $data->gender = $row['gender'];
+                $data->imageId = NULL;
+                $data->imageUrl = NULL;
                 $data->profileImage = NULL;
                 if (!isNullOrEmptyString($row["file_id"])) {
                     $photo = new stdClass();
                     $photo->id = $row["file_id"];
-                    $photo->imageUrl = urlPathImage()."".$row['file_name'];
+                    $photo->fileUrl = urlPathImage()."".$row['file_name'];
+                    $photo->fileName = $row['file_name'];
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;
@@ -167,6 +170,54 @@ function updatePassword($userId, $password) {
             `password`= '$password',
             `updated_at` = '$updatedAt'
         WHERE `user_id`= $userId";
+        $conn->query($sql);
+        return true;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, $error);
+        return false;
+    }
+}
+
+function updateProfile($bodyRequest, $userId) {
+    try {
+        clearstatcache();
+        $conn = callDb();
+        $updatedAt = currentTime();
+        
+        $sql = "UPDATE user SET `updated_at` = '$updatedAt'";
+        if (!empty($bodyRequest['fullName'])) {
+            $fullName = $bodyRequest['fullName'];
+            $sql = $sql.", `fullname` = '$fullName'";
+        }
+
+        if (!empty($bodyRequest['userName'])) {
+            $userName = $bodyRequest['userName'];
+            $sql = $sql.", `username` = '$userName'";
+        }
+
+        if (!empty($bodyRequest['gender'])) {
+            $gender = $bodyRequest['gender'];
+            $sql = $sql.", `gender` = '$gender'";
+        }
+
+        if (!empty($bodyRequest['birthdate'])) {
+            $birthdate = $bodyRequest['birthdate'];
+            $sql = $sql.", `birthdate` = '$birthdate'";
+        }
+
+        if (!empty($bodyRequest['imageId'])) {
+            $imageId = $bodyRequest['imageId'];
+            $sql = $sql.", `image_id` = '$imageId'";
+        }
+
+        if (!empty($bodyRequest['email'])) {
+            $email = $bodyRequest['email'];
+            $sql = $sql.", `email` = '$email'";
+        }
+
+        $sql = $sql." WHERE `user_id`=$userId";
+        clearstatcache();
         $conn->query($sql);
         return true;
     } catch (Exception $e) {
