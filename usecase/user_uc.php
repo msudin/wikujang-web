@@ -90,10 +90,8 @@ function getUserById($userId) {
                 $data->userName = $row["username"];
                 $data->birthdate = $row['birthdate'];
                 $data->gender = $row['gender'];
-                $data->imageId = NULL;
-                $data->imageUrl = NULL;
                 $data->profileImage = NULL;
-                if (!isNullOrEmptyString($row["file_id"])) {
+                if (!empty($row["file_id"])) {
                     $photo = new stdClass();
                     $photo->id = $row["file_id"];
                     $photo->fileUrl = urlPathImage()."".$row['file_name'];
@@ -101,14 +99,12 @@ function getUserById($userId) {
                     $data->profileImage = $photo;
                 }
                 $data->address = NULL;
-                if (!isNullOrEmptyString($row["address_id"])) {
-                    $address = new stdClass();
-                    $address->districtId = 1121;
-                    $address->districtName = "Pasuruan";
-                    $address->subDistrictId = 123123;
-                    $address->subDistrictName = "Ngabar";
-                    $address->description = "Jl Kemana Saja";
-                    $data->address = $address;
+                if (!empty($row["address_id"])) {
+                    // query get detail Address;
+                    $resultAddress = getAddressDetail($row["address_id"]);
+                    if ($resultAddress->success = true) {
+                        $data->address = $resultAddress->data;
+                    } 
                 }
                 $data->isActive = filter_var($row['active'], FILTER_VALIDATE_BOOLEAN);
                 $data->role = $row['role'];
@@ -184,7 +180,8 @@ function updateProfile($bodyRequest, $userId) {
         clearstatcache();
         $conn = callDb();
         $updatedAt = currentTime();
-        
+        $addressId = $bodyRequest['addressId'] ?? NULL;
+
         $sql = "UPDATE user SET `updated_at` = '$updatedAt'";
         if (!empty($bodyRequest['fullName'])) {
             $fullName = $bodyRequest['fullName'];
@@ -216,8 +213,30 @@ function updateProfile($bodyRequest, $userId) {
             $sql = $sql.", `email` = '$email'";
         }
 
-        $sql = $sql." WHERE `user_id`=$userId";
-        clearstatcache();
+        if (!empty($bodyRequest['subDistrictId'])) {
+            $subDistrictId = $bodyRequest['subDistrictId']; 
+            $districtId = $bodyRequest['districtId']; 
+            $addressDetail = $bodyRequest['address']; 
+            if (!empty($addressId)) {
+                $resultAddress = updateAddress($addressId, $subDistrictId, $districtId, $addressDetail);
+                if ($resultAddress->success == false) {
+                    return false;
+                }
+             } else {
+                 $resultAddress = createAddress($subDistrictId, $districtId, $addressDetail);
+                 if ($resultAddress->success == true) {
+                     $addressId = $resultAddress->data;  
+                 } else {
+                     return false;
+                 }    
+             }
+        } 
+
+        if (!empty($addressId)) {
+            $sql = $sql.", `address_id` = '$addressId'";
+        }
+
+        $sql = $sql." WHERE `user_id`= $userId";
         $conn->query($sql);
         return true;
     } catch (Exception $e) {
@@ -226,5 +245,4 @@ function updateProfile($bodyRequest, $userId) {
         return false;
     }
 }
-
 ?>

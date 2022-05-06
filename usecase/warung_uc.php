@@ -136,11 +136,12 @@ function getWarungById($id = NULL) {
             $data->address = null;
             $temp->addressId = $row['address_id'];
             if (!empty($temp->addressId)) {
-
                 // query get detail Address;
                 $resultAddress = getAddressDetail($temp->addressId);
                 if ($resultAddress->success = true) {
                     $data->address = $resultAddress->data;
+                } else {
+                    return;
                 }   
             } 
             $data->latitude = $row['latitude'];
@@ -153,11 +154,7 @@ function getWarungById($id = NULL) {
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, $error);
-
-        $resultData = new stdClass();
-        $resultData->success = false;
-        $resultData->data = NULL;
-        return $resultData;
+        return resultBody();
     }
 }
 ?>

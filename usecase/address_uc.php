@@ -28,10 +28,12 @@ function createAddress($subDistrictId = null, $districtId = null, $description =
                 return resultBody(true, $addressId);
         } else {
             response(500);
+            return resultBody();
         }
     } catch (Exception $e){
         $error = $e->getMessage();
         response(500, $error);
+        return resultBody();
     }
 }
 
@@ -39,7 +41,7 @@ function getAddressDetail($addressId = null) {
     try {
         if (isset($addressId)) {
             $connn = callDb();
-            $data = new stdClass();
+            $data = NULL;
 
             $sql = "SELECT * FROM `address` a
             LEFT JOIN `subdistrict` s ON a.subdistrict_id = s.subdistrict_id 
@@ -48,6 +50,7 @@ function getAddressDetail($addressId = null) {
 
             $result = $connn->query($sql);
             while($row = $result->fetch_assoc()) {
+                $data = new stdClass();
                 $data->id = $row['address_id'];
                 $data->subDistrictId = (Int) $row['subdistrict_id'];
                 $data->subDistrictName = $row['subdistrict_name'];
@@ -63,6 +66,26 @@ function getAddressDetail($addressId = null) {
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, $error);
+        return resultBody();
+    }
+}
+
+function updateAddress($addressId, $subDistrictId, $districtId, $description) {
+    try {
+        $conn = callDb();
+        $updatedAt = currentTime();
+        $sql = "UPDATE `address` SET
+            `subdistrict_id`= $subDistrictId,
+            `district_id`= $districtId,
+            `address_detail`= '$description',
+            `updated_at`= '$updatedAt'
+        WHERE `address_id`='$addressId'";
+        $conn->query($sql);
+        return resultBody(true);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, $error);
+        return resultBody();
     }
 }
 ?>

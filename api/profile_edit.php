@@ -12,7 +12,7 @@ try {
             if (!empty($dToken)) { 
                 $isSuccess = updateProfile($entityData, $dToken->userId);
                 if ($isSuccess) {
-                    response(200, "Berhasil ubah profile");
+                    response(200, "Berhasil ubah profil");
                 }
             }
         } else {
