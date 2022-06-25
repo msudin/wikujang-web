@@ -4,7 +4,6 @@ include_once('../helper/import.php');
 try {
     clearstatcache();
     if (requestMethod() == "POST") {
-        /// CREATE WARUNG
         $entityBody = file_get_contents('php://input');
         $data = json_decode($entityBody, true);
         $headerToken = headerToken();
@@ -49,39 +48,10 @@ try {
         } else {
             response(400);
         }
-    } else if (requestMethod() == "GET") {
-        $type = $_GET['type'];
-        if(isset($type)) {
-            /// [GET] all warung data
-            if ($type == 'all') {
-                $resultWarung = getAllWarung();
-                if ($resultWarung->success == true) {
-                    response(200, "record found", $resultWarung->data);
-                }
-            }  else {
-                response(400);    
-            }
-        } else {
-            $headerToken = headerToken();
-            if (!empty($headerToken)) {
-                $dToken = validateToken($headerToken);
-                if ($dToken != NULL) { 
-                    $resultWarung = getWarungById($dToken->userId);
-                    if ($resultWarung->success == true) {
-                        response(200, "record found", $resultWarung->data);
-                    } else {
-                        response(400);
-                    }
-                }
-            } else {
-                response(401);
-            }
-        }       
     } else {
         response(500, "Method not allowed");
     }
 } catch (Exception $e) {
     response(500, $e->getMessage());
 }
-
 ?>

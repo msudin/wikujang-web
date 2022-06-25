@@ -245,4 +245,24 @@ function updateProfile($bodyRequest, $userId) {
         return false;
     }
 }
+
+function getUserPhoneById($id) {
+    try {
+        $connn = callDb();
+        $sql = "SELECT phone FROM user WHERE user_id=$id";
+        $result = $connn->query($sql);
+        if ($result->num_rows == 1) {
+            while($row = $result->fetch_assoc()) {
+                $data = new \stdClass();
+                $data->phone = $row["phone"];
+                return $data;
+            }
+        } else {
+            response(404);
+            return NULL;
+        }
+    } catch (Exception $e) {
+        return NULL;
+    }
+}
 ?>

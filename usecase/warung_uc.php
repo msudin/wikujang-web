@@ -74,7 +74,6 @@ function getAllWarung() {
             $data->openTime = $row['open_time'];
             $data->closedTime = $row['closed_time'];
             $data->rating = $row['rating'];
-            $data->rating = $row['rating'];
             $data->imageId = $row['image_id'];
             $data->imageUrl = "";
             if (!empty($data->imageId)) {
@@ -98,7 +97,7 @@ function getAllWarung() {
         return $resultData;
     } catch (Exception $e) {
         $error = $e->getMessage();
-        response(500, "get all warung exception -> $error");
+        response(500, "$error");
 
         $resultData = new stdClass();
         $resultData->success = false;
@@ -121,6 +120,10 @@ function getWarungById($id = NULL) {
         while($row = $result->fetch_assoc()) {
             $data->id = $row['warung_id'];
             $data->userId = (int)$row['user_id'];
+            if (!empty($data->userId)) {
+                $dProfile = getUserPhoneById($data->userId);
+                $data->phone = $dProfile->phone;
+            }
             $data->name = $row['name'];
             $data->username = $row['username'];
             $data->description = $row['description'];
@@ -149,12 +152,46 @@ function getWarungById($id = NULL) {
             $data->createdAt = $row['created_at'];
             $data->updatedAt = $row['updated_at'];
             $data->deletedAt = $row['deleted_at'];
+            return resultBody(true, $data);
         } 
-        return resultBody(true, $data);
     } catch (Exception $e) {
         $error = $e->getMessage();
         response(500, $error);
         return resultBody();
     }
 }
+
+
+function updateWarung($bodyRequest, $warungId) {
+    try {
+        clearstatcache();
+        $conn = callDb();
+        $updatedAt = currentTime();
+        $addressId = $bodyRequest['addressId'] ?? NULL;
+
+        $sql = "UPDATE warung SET `updated_at` = '$updatedAt'";
+        
+        /// [NAME]
+        $name = $bodyRequest['name'];
+        $sql = $sql.", `name` = '$name'";
+
+        /// [USERNAME]
+        $userName = $bodyRequest['userName'];
+        $sql = $sql.", `username` = '$userName'";
+
+        // [ADDRESS ID]
+        if (!empty($addressId)) {
+            $sql = $sql.", `address_id` = '$addressId'";
+        }
+
+        $sql = $sql." WHERE `warung_id`= '$warungId'";
+        $conn->query($sql);
+        return true;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        response(500, $error);
+        return false;
+    }
+}
+
 ?>

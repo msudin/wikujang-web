@@ -47,7 +47,7 @@ function createProduct($body) {
     }
 }
 
-function getAllProduct() {
+function getAllProduct($limit = 0) {
     try {
         $conn = callDb();
         $array = array();
@@ -55,6 +55,11 @@ function getAllProduct() {
         $sql = "SELECT f.*, p.*
         FROM `file` f
         RIGHT JOIN `product` p ON f.file_id = p.image_id";
+
+        if (!empty($limit)) {
+            $sql = $sql." LIMIT $limit";
+        }
+
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $data = new stdClass();
