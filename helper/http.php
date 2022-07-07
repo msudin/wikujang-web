@@ -27,7 +27,7 @@ function serverUserName() {
     if (isEnvironmentLocal()) {
         return "root";
     } else {
-        return "albaar";
+        return "wiks7958_albaar";
     }
 }
 
