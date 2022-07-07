@@ -27,7 +27,7 @@ function serverUserName() {
     if (isEnvironmentLocal()) {
         return "root";
     } else {
-        return "id18502326_root";
+        return "albaar";
     }
 }
 
@@ -35,7 +35,7 @@ function serverDbPassword() {
     if (isEnvironmentLocal()) {
         return "root";
     } else {
-        return "Hostingerhostinger1234#";
+        return "Albaar_1234";
     }
 }
 
@@ -43,15 +43,15 @@ function serverDbName() {
     if (isEnvironmentLocal()) { 
         return "wikujang_db";
     } else {
-        return "id18502326_wikujang";
+        return "wiks7958_wikujang";
     }
 }
 
 function urlPathImage() {
     if (isEnvironmentLocal()) {
-        return "http://192.168.0.103:8888/wikujang-web/"."uploads/"; 
+        return "http://192.168.68.101:8888/wikujang-web/"."uploads/"; 
     } else {
-        return "https://wiskuljang.000webhostapp.com/uploads/";
+        return "https://wikujang.site/dashboard/uploads/";
     }
 }
 
