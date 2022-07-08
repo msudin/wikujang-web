@@ -8,11 +8,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="v1/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="v1plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="v1/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 
 
@@ -53,7 +53,7 @@ if(isset($_GET['message'])){
     </div>
     <div class="card-body">
       <p class="login-box-msg">Log In to start your session</p>
-      <form action="v1/usecase/login_uc.php" method="post">
+      <form action="usecase/login_uc.php" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Username", name="username">
           <div class="input-group-append">
@@ -85,10 +85,10 @@ if(isset($_GET['message'])){
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="v1/plugins/jquery/jquery.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="v1/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="v1/dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>
