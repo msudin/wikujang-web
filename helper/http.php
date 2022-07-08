@@ -16,7 +16,7 @@ function headerToken() {
 }
 
 function isEnvironmentLocal() {
-    return false;
+    return true;
 }
 
 function serverName() {
