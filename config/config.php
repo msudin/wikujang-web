@@ -1,5 +1,6 @@
 <?php
 include_once('../helper/http.php');
+date_default_timezone_set('Asia/Jakarta');
 
 function callDb() {
     $servername = serverName();
